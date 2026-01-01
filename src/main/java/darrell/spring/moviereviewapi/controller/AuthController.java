@@ -1,9 +1,9 @@
 package darrell.spring.moviereviewapi.controller;
 
-import darrell.spring.moviereviewapi.dto.AuthResponse;
-import darrell.spring.moviereviewapi.dto.LoginRequest;
-import darrell.spring.moviereviewapi.dto.RegisterRequest;
-import darrell.spring.moviereviewapi.dto.RegisterResponse;
+import darrell.spring.moviereviewapi.dto.auth.AuthResponse;
+import darrell.spring.moviereviewapi.dto.auth.LoginRequest;
+import darrell.spring.moviereviewapi.dto.auth.RegisterRequest;
+import darrell.spring.moviereviewapi.dto.auth.RegisterResponse;
 import darrell.spring.moviereviewapi.entity.User;
 import darrell.spring.moviereviewapi.exception.UserAlreadyExistException;
 import darrell.spring.moviereviewapi.repository.UserRepository;

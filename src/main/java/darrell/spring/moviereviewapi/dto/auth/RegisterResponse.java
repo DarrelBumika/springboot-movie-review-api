@@ -1,4 +1,4 @@
-package darrell.spring.moviereviewapi.dto;
+package darrell.spring.moviereviewapi.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
