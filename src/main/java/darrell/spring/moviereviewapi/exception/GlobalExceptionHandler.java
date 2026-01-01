@@ -1,6 +1,7 @@
 package darrell.spring.moviereviewapi.exception;
 
 import darrell.spring.moviereviewapi.dto.error.ErrorResponse;
+import darrell.spring.moviereviewapi.utils.ErrorResponseBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,44 +11,31 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserAlreadyExistException.class)
-    public ResponseEntity<ErrorResponse> handleUserAlreadyExistException(UserAlreadyExistException e) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                "User Already Exists",
-                e.getMessage()
-        );
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-    }
-
     @ExceptionHandler(AlreadyExistException.class)
     public ResponseEntity<ErrorResponse> handleAlreadyExistException(AlreadyExistException e) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
+        return ErrorResponseBuilder.build(
+                HttpStatus.CONFLICT,
                 "Data Already Exists",
-                e.getMessage()
+                e
         );
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
     @ExceptionHandler(NotExistException.class)
     public ResponseEntity<ErrorResponse> handleNotExistException(NotExistException e) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
+        return ErrorResponseBuilder.build(
+                HttpStatus.NOT_FOUND,
                 "Data Not Found",
-                e.getMessage()
+                e
         );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException e) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
+        return ErrorResponseBuilder.build(
+                HttpStatus.NOT_FOUND,
                 "User Not Found",
-                e.getMessage()
+                e
         );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 }
 
