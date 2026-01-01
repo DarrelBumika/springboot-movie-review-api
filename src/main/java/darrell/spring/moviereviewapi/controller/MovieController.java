@@ -14,7 +14,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/movie")
+@RequestMapping("/api/v1/movies")
 public class MovieController {
 
     private final MovieService movieService;
@@ -42,7 +42,7 @@ public class MovieController {
         ));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<CreateMovieResponse> createMovie(@RequestBody CreateMovieRequest request) {
         final Movie newMovie = movieService.createMovie(new Movie(
                 null,
@@ -59,8 +59,8 @@ public class MovieController {
         ));
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<DeleteMovieResponse> deleteMovie(@RequestParam UUID id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<DeleteMovieResponse> deleteMovie(@PathVariable UUID id) {
         final UUID deletedId = movieService.deleteMovie(id);
 
         return ResponseEntity.ok(new DeleteMovieResponse(
