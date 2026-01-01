@@ -21,6 +21,16 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public Movie getMovieById(UUID id) {
+        if (movieRepository.existsById(id)) {
+            return movieRepository.findById(id);
+        }
+
+        throw new NotExistException(
+                String.format("The movie with title: %s is not exist", id.toString())
+        );
+    }
+
     public Movie createMovie(Movie newMovie) {
         if (movieRepository.existsByTitleAndDirector(newMovie.getTitle(), newMovie.getDirector())) {
             throw new AlreadyExistException(
@@ -42,14 +52,15 @@ public class MovieService {
 
     @Transactional
     public UUID deleteMovie(UUID id) {
-        if (!movieRepository.existsById(id)) {
-            throw new NotExistException(
-                    String.format("The movie with id: %s", id)
-            );
+        if (movieRepository.existsById(id)) {
+            movieRepository.deleteById(id);
+            return id;
+
         }
 
-        movieRepository.deleteById(id);
-        return id;
+        throw new NotExistException(
+                String.format("The movie with id: %s is not exist", id)
+        );
     }
 
 }

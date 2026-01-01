@@ -11,9 +11,8 @@ import java.util.UUID;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-    Optional<Movie> findByTitle(String title);
+    Movie findById(UUID id);
     boolean existsById(UUID id);
-    boolean existsByTitle(String title);
     boolean existsByTitleAndDirector(String title, String director);
     void deleteById(UUID id);
 

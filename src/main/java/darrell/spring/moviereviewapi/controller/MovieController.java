@@ -29,6 +29,19 @@ public class MovieController {
         ));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<GetMovieResponse> getMovie(@PathVariable UUID id) {
+        Movie movie = movieService.getMovieById(id);
+
+        return ResponseEntity.ok(new GetMovieResponse(
+                movie.getId(),
+                movie.getTitle(),
+                movie.getReleaseYear(),
+                movie.getSynopsis(),
+                movie.getDirector()
+        ));
+    }
+
     @PostMapping("/create")
     public ResponseEntity<CreateMovieResponse> createMovie(@RequestBody CreateMovieRequest request) {
         final Movie newMovie = movieService.createMovie(new Movie(
