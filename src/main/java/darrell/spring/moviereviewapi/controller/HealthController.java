@@ -1,6 +1,6 @@
 package darrell.spring.moviereviewapi.controller;
 
-import darrell.spring.moviereviewapi.dto.HealthResponse;
+import darrell.spring.moviereviewapi.dto.health.HealthResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
