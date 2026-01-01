@@ -5,7 +5,7 @@ import darrell.spring.moviereviewapi.dto.auth.LoginRequest;
 import darrell.spring.moviereviewapi.dto.auth.RegisterRequest;
 import darrell.spring.moviereviewapi.dto.auth.RegisterResponse;
 import darrell.spring.moviereviewapi.entity.User;
-import darrell.spring.moviereviewapi.exception.UserAlreadyExistException;
+import darrell.spring.moviereviewapi.exception.AlreadyExistException;
 import darrell.spring.moviereviewapi.repository.UserRepository;
 import darrell.spring.moviereviewapi.security.JwtUtil;
 
@@ -31,7 +31,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new UserAlreadyExistException("The user already exist");
+            throw new AlreadyExistException(
+                    String.format("Username: %s already exists", request.getUsername())
+            );
         }
 
         final User newUser = userRepository.save(new User(
