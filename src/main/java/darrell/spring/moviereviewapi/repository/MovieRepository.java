@@ -4,13 +4,17 @@ import darrell.spring.moviereviewapi.entity.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     Optional<Movie> findByTitle(String title);
+    boolean existsById(UUID id);
     boolean existsByTitle(String title);
     boolean existsByTitleAndDirector(String title, String director);
+    void deleteById(UUID id);
 
 }

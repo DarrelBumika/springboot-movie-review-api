@@ -2,11 +2,14 @@ package darrell.spring.moviereviewapi.service;
 
 import darrell.spring.moviereviewapi.entity.Movie;
 import darrell.spring.moviereviewapi.exception.AlreadyExistException;
+import darrell.spring.moviereviewapi.exception.NotExistException;
 import darrell.spring.moviereviewapi.repository.MovieRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -35,6 +38,18 @@ public class MovieService {
                 newMovie.getSynopsis(),
                 newMovie.getDirector()
         ));
+    }
+
+    @Transactional
+    public UUID deleteMovie(UUID id) {
+        if (!movieRepository.existsById(id)) {
+            throw new NotExistException(
+                    String.format("The movie with id: %s", id)
+            );
+        }
+
+        movieRepository.deleteById(id);
+        return id;
     }
 
 }
