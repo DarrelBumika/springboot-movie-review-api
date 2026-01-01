@@ -1,5 +1,6 @@
 package darrell.spring.moviereviewapi.service;
 
+import darrell.spring.moviereviewapi.dto.movie.CreateMovieRequest;
 import darrell.spring.moviereviewapi.entity.Movie;
 import darrell.spring.moviereviewapi.exception.AlreadyExistException;
 import darrell.spring.moviereviewapi.exception.NotExistException;
@@ -55,7 +56,23 @@ public class MovieService {
         if (movieRepository.existsById(id)) {
             movieRepository.deleteById(id);
             return id;
+        }
 
+        throw new NotExistException(
+                String.format("The movie with id: %s is not exist", id)
+        );
+    }
+
+    @Transactional
+    public Movie updateMovie(UUID id, CreateMovieRequest newMovie) {
+        if (movieRepository.existsById(id)) {
+            return movieRepository.save(new Movie(
+                    id,
+                    newMovie.getTitle(),
+                    newMovie.getReleaseYear(),
+                    newMovie.getSynopsis(),
+                    newMovie.getDirector()
+            ));
         }
 
         throw new NotExistException(

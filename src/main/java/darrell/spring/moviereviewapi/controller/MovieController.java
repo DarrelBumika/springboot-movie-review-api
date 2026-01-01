@@ -68,9 +68,15 @@ public class MovieController {
         ));
     }
 
-    @PutMapping("/update")
-    public String updateMovie() {
-        return "Hello, Movie Review API!";
+    @PutMapping("/{id}")
+    public ResponseEntity<CreateMovieResponse> updateMovie(@PathVariable UUID id, @RequestBody CreateMovieRequest request) {
+        final Movie updatedMovie = movieService.updateMovie(id, request);
+
+        return ResponseEntity.ok(new CreateMovieResponse(
+                updatedMovie.getId(),
+                updatedMovie.getTitle(),
+                updatedMovie.getDirector()
+        ));
     }
 
 }
